@@ -1,6 +1,14 @@
 package com.walter.v2wsmart.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +17,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+@Entity
+public class Product implements Serializable {
 
+	private static final long serialVersionUID = -5987594373993940018L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
@@ -19,6 +32,8 @@ public class Product {
 	
 	private BigDecimal price;
 	
+	@ManyToOne
+	@JoinColumn
 	private Category category;
 	
 }
