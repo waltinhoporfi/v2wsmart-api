@@ -1,5 +1,6 @@
 package com.walter.v2wsmart.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class CategoryService {
 		
 		return category.orElseThrow(() -> new CategoryException(
 				"Categoria não encontrada"));
+	}
+	
+	public List<Category> findAll(){
+		return categoryRepository.findAll();
 	}
 	
 }
