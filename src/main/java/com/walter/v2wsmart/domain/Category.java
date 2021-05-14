@@ -1,6 +1,7 @@
 package com.walter.v2wsmart.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ public class Category implements Serializable{
 
 	private String description;
 
-	@OneToMany
-	private List<Product> products;
+	@OneToMany(mappedBy = "category")
+	private List<Product> products = new ArrayList<Product>();
 
 }
