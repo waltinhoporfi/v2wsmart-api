@@ -18,6 +18,18 @@ public class ProductService {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	public Product update(Long id, Product product) {
+		Product newProduct = findById(id);
+		updateData(newProduct, product);
+		return productRepository.save(newProduct);
+	}
+
+	private void updateData(Product newProduct, Product product) {
+		newProduct.setName(product.getName());
+		newProduct.setDescription(product.getDescription());
+		newProduct.setPrice(product.getPrice());
+	}
 
 	public List<Product> findAll() {
 		return productRepository.findAll();

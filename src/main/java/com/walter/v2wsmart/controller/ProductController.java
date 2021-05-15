@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +24,12 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
+	@PutMapping("/{id}")
+	public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product product) {
+		Product newProduct = productService.update(id, product);
+		return ResponseEntity.ok().body(newProduct);
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<Product>> findAll() {
 		List<Product> products = productService.findAll();
