@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.walter.v2wsmart.DTO.CategoryDTO;
@@ -42,7 +43,12 @@ public class CategoryService {
 
 	public void delete(Long id) {
 		findById(id);
-		categoryRepository.deleteById(id);
+		try {
+			categoryRepository.deleteById(id);	
+		} catch (DataIntegrityViolationException e) {
+			throw new com.walter.v2wsmart.exception.DataIntegrityViolationException
+			("Esta categoria possui produtos associados, por isso não pode ser deletada");
+		}		
 	}
 	
 }
