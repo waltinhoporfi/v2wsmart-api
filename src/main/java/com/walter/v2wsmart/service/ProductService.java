@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.walter.v2wsmart.domain.Category;
 import com.walter.v2wsmart.domain.Product;
 import com.walter.v2wsmart.exception.ProductException;
 import com.walter.v2wsmart.repository.ProductRepository;
@@ -18,6 +19,13 @@ public class ProductService {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	public Product create(Long idCategory, Product product) {
+		Category category = categoryService.findById(idCategory);
+		product.setId(null);
+		product.setCategory(category);
+		return productRepository.save(product);
+	}	
 	
 	public Product update(Long id, Product product) {
 		Product newProduct = findById(id);
