@@ -16,14 +16,22 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	public List<Product> findAll(){
+	@Autowired
+	private CategoryService categoryService;
+
+	public List<Product> findAll() {
 		return productRepository.findAll();
 	}
 
-	public Product findById(Long id) {		
-		Optional<Product> product = productRepository.findById(id);		
-		return product.orElseThrow(() -> new ProductException(
-				"Produto não encontrado"));
+	public Product findById(Long id) {
+		Optional<Product> product = productRepository.findById(id);
+		return product.orElseThrow(() -> new ProductException("Produto não encontrado"));
 	}
-	
+
+	public List<Product> findAllByCategory(Long idCategory) {
+		categoryService.findById(idCategory);
+		return productRepository.findAllByCategory(idCategory);
+		
+	}
+
 }
