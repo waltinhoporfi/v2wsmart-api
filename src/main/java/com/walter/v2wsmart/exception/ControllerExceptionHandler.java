@@ -13,7 +13,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(CategoryException.class)
 	public ResponseEntity<StandardError> objectNotFoundException(CategoryException e, 
 			ServletRequest request){
-		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(),
 				e.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 		
@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(ProductException.class)
 	public ResponseEntity<StandardError> objectNotFoundException(ProductException e, 
 			ServletRequest request){
-		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(),
 				e.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 		
@@ -31,7 +31,16 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException e, 
 			ServletRequest request){
-		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+		StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(),
+				e.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		
+	}
+	
+	@ExceptionHandler(ProductInvalidException.class)
+	public ResponseEntity<StandardError> productInvalidException(ProductInvalidException e, 
+			ServletRequest request){
+		StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(),
 				e.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		

@@ -1,5 +1,6 @@
 package com.walter.v2wsmart.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.walter.v2wsmart.DTO.ProductDTO;
 import com.walter.v2wsmart.domain.Product;
@@ -27,10 +29,11 @@ public class ProductController {
 	private ProductService productService;
 
 	@PostMapping
-	public ResponseEntity<Product> create(@RequestParam(value = "category", defaultValue = "0") Long idCategory,
+	public ResponseEntity<Product> create(@RequestParam(value = "category", defaultValue = "1") Long idCategory,
 			@RequestBody Product product) {
 		Product newProduct = productService.create(idCategory, product);
-		return ResponseEntity.ok().body(newProduct);
+		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/products/{id}").buildAndExpand(newProduct.getId()).toUri();
+		return ResponseEntity.created(uri).body(newProduct);
 	}
 
 	@PutMapping("/{id}")
